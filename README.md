@@ -19,6 +19,8 @@ Our code is developed and tested on the following environment:
 - kaolin v0.1
 - pytorch3d v0.3.0
 - jsoncpp 1.8.3
+
+
 We utilized several open source library to implement the code:
 
 - [kaolin]([https://github.com/NVIDIAGameWorks/kaolin](https://github.com/NVIDIAGameWorks/kaolin/tree/v0.1))
