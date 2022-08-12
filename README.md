@@ -18,12 +18,13 @@ Our code is developed and tested on the following environment:
 - Numpy 1.19
 - kaolin v0.1
 - pytorch3d v0.3.0
+- Mayavi 4.8.2
 - jsoncpp 1.8.3
 
 
 We utilized several open source library to implement the code:
 
-- [kaolin]([https://github.com/NVIDIAGameWorks/kaolin](https://github.com/NVIDIAGameWorks/kaolin/tree/v0.1))
+- [kaolin](https://github.com/NVIDIAGameWorks/kaolin/tree/v0.1)
 - [pytorch3d](https://github.com/facebookresearch/pytorch3d/tree/v0.3.0)
 - [PyTorchEMD](https://github.com/daerduoCarey/PyTorchEMD) (only for evaluation)
 - [Mayavi](https://docs.enthought.com/mayavi/mayavi/) (only for visualization of demo)
@@ -48,20 +49,20 @@ https://github.com/facebookresearch/pytorch3d/blob/v0.3.0/INSTALL.md
 git checkout v0.3.0
 
 ### mayavi
-conda install mayavi
+conda install mayavi=4.8.2
 
-pip install mayavi
+pip install mayavi=4.7.1
 
-pip install PyQt5
+pip install PyQt5=5.15.6
 
 jupyter nbextension install --py mayavi --user
 
 jupyter nbextension enable --py mayavi --user
 
 ### nuscenes & vtk
-pip install nuscenes-devkit
+pip install nuscenes-devkit=1.1.9
 
-pip install vtk
+pip install vtk=8.2.0
 
 ### PyQt DEBUG MODE
 `
