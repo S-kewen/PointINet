@@ -20,7 +20,7 @@ Our code is developed and tested on the following environment:
 - pytorch3d v0.3.0
 - Mayavi 4.8.2
 - jsoncpp 1.8.3
-
+- wandb 0.13.1
 
 We utilized several open source library to implement the code:
 
@@ -73,6 +73,8 @@ export QT_DEBUG_PLUGINS=1
 `
 conda install jsoncpp=1.8.3
 `
+### wandb
+`pip install wandb=0.13.1`
 
 ### install issue
 * ModuleNotFoundError: No module named 'vtkIOParallelPython'
