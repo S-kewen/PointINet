@@ -43,13 +43,11 @@ git checkout v0.1
 python setup.py develop
 
 ### pytorch3d v0.3.0
+https://github.com/facebookresearch/pytorch3d/blob/v0.3.0/INSTALL.md
 
 git checkout v0.3.0
 
-https://github.com/facebookresearch/pytorch3d/blob/v0.3.0/INSTALL.md
-
 ### mayavi
-`
 conda install mayavi
 
 pip install mayavi
@@ -59,12 +57,12 @@ pip install PyQt5
 jupyter nbextension install --py mayavi --user
 
 jupyter nbextension enable --py mayavi --user
-`
+
 ### nuscenes & vtk
-`
 pip install nuscenes-devkit
+
 pip install vtk
-`
+
 ### PyQt DEBUG MODE
 `
 export QT_DEBUG_PLUGINS=1
@@ -74,9 +72,10 @@ export QT_DEBUG_PLUGINS=1
 `
 conda install jsoncpp=1.8.3
 `
+
 ### install issue
 * ModuleNotFoundError: No module named 'vtkIOParallelPython'
-conda install jsoncpp=1.8.3
+`conda install jsoncpp=1.8.3`
 
 ## Usage
 
