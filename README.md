@@ -16,14 +16,65 @@ Our code is developed and tested on the following environment:
 - PyTorch 1.4.0
 - Cuda 10.1
 - Numpy 1.19
-
+- kaolin v0.1
+- pytorch3d v0.3.0
+- jsoncpp 1.8.3
 We utilized several open source library to implement the code:
 
-- [kaolin](https://github.com/NVIDIAGameWorks/kaolin)
-- [pytorch3d](https://github.com/facebookresearch/pytorch3d)
+- [kaolin]([https://github.com/NVIDIAGameWorks/kaolin](https://github.com/NVIDIAGameWorks/kaolin/tree/v0.1))
+- [pytorch3d](https://github.com/facebookresearch/pytorch3d/tree/v0.3.0)
 - [PyTorchEMD](https://github.com/daerduoCarey/PyTorchEMD) (only for evaluation)
 - [Mayavi](https://docs.enthought.com/mayavi/mayavi/) (only for visualization of demo)
 - [wandb](https://app.wandb.ai/) (to record training process)
+
+## install command
+### pytorch 1.4.1
+`conda install pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.1 -c pytorch`
+
+### kaolin v0.1
+conda install cycler
+
+git clone --recursive https://github.com/NVIDIAGameWorks/kaolin.git
+
+git checkout v0.1
+
+python setup.py develop
+
+### pytorch3d v0.3.0
+
+git checkout v0.3.0
+
+https://github.com/facebookresearch/pytorch3d/blob/v0.3.0/INSTALL.md
+
+### mayavi
+`
+conda install mayavi
+
+pip install mayavi
+
+pip install PyQt5
+
+jupyter nbextension install --py mayavi --user
+
+jupyter nbextension enable --py mayavi --user
+`
+### nuscenes & vtk
+`
+pip install nuscenes-devkit
+pip install vtk
+`
+### PyQt DEBUG MODE
+`
+export QT_DEBUG_PLUGINS=1
+`
+
+### jsoncpp
+`
+conda install jsoncpp=1.8.3
+`
+### install issue
+* ModuleNotFoundError: No module named 'vtkIOParallelPython'
+conda install jsoncpp=1.8.3
 
 ## Usage
 
