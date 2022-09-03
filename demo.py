@@ -4,7 +4,7 @@ import numpy as np
 
 from models.models import PointINet
 
-import mayavi.mlab as mlab
+# import mayavi.mlab as mlab
 
 import argparse
 from tqdm import tqdm
@@ -17,6 +17,7 @@ import open3d as o3d
 
 # envpath = '/home/skewen/anaconda3/envs/pointinet/lib/python3.6/site-packages/cv2/qt/plugins/platforms'
 # os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = envpath
+
 
 def ply2bin(input_path, output_path):
     data = PlyData.read(input_path).elements[0].data  # read data
@@ -86,15 +87,15 @@ def demo(args):
     net.eval()
     net.cuda()
 
-    interp_scale = 5  # interp how many frame
-    t_array = np.arange(1.0/interp_scale, 1.0, 1.0 /
-                        interp_scale, dtype=np.float32)
+    interp_scale = 1  # interp how many frame
+    t_array = np.arange(1.0/(interp_scale+1), 1.0, 1.0 /
+                        (interp_scale+1), dtype=np.float32)
 
     with torch.no_grad():
         pc1, color1 = get_lidar(fn1, args.npoints)
         pc2, color2 = get_lidar(fn2, args.npoints)
 
-        for i in range(interp_scale-1):
+        for i in range(interp_scale):
             t = t_array[i]
             t = torch.tensor([t])
             t = t.cuda().float()
@@ -107,15 +108,19 @@ def demo(args):
             pred_mid_pc = pred_mid_pc.squeeze(0).permute(1, 0).cpu().numpy()
 
             if args.visualize == 1:
-                fig = mlab.figure(figure=None, bgcolor=(1, 1, 1), fgcolor=(
-                    0, 0, 0), engine=None, size=(1600, 1000))
-                mlab.points3d(ini_pc[:, 0], ini_pc[:, 1], ini_pc[:, 2], color=(
-                    0, 0, 1), scale_factor=0.2, figure=fig, mode='sphere')
-                mlab.points3d(end_pc[:, 0], end_pc[:, 1], end_pc[:, 2], color=(
-                    0, 1, 0), scale_factor=0.2, figure=fig, mode='sphere')
-                mlab.points3d(pred_mid_pc[:, 0], pred_mid_pc[:, 1], pred_mid_pc[:, 2], color=(
-                    1, 0, 0), scale_factor=0.2, figure=fig, mode='sphere')
-                mlab.show()
+                point_list_init = o3d.geometry.PointCloud()
+
+                point_list_init.points = o3d.utility.Vector3dVector(ini_pc[:, :3])
+                point_list_init.paint_uniform_color([0, 0, 1])
+
+                point_list_end = o3d.geometry.PointCloud()
+                point_list_end.points = o3d.utility.Vector3dVector(end_pc[:, :3])
+                point_list_end.paint_uniform_color([0, 1, 0])
+
+                point_list_mid = o3d.geometry.PointCloud()
+                point_list_mid.points = o3d.utility.Vector3dVector(pred_mid_pc[:, :3])
+                point_list_mid.paint_uniform_color([1, 0, 0])
+                o3d.visualization.draw_geometries([point_list_init, point_list_end, point_list_mid])
 
             if args.is_save == 1:
                 save_dir = './data/demo_data/interpolated'
