@@ -104,6 +104,51 @@ class PointINet(nn.Module):
 
         return fused_points
 
+class SceneFlow(nn.Module):
+    def __init__(self, freeze=1):
+        super(SceneFlow, self).__init__()
+        self.flow = FlowNet3D()
+        if freeze == 1:
+            for p in self.parameters():
+                p.requires_grad = False
+                
+        self.fusion = PointsFusion(4, [64, 64, 128])
+        
+    def forward(self, points1, points2, features1, features2, t=0.5):
+        '''
+        Input:
+            points1: [B,3+C,N]
+            points2: [B,3+C,N]
+            features1: [B,3,N] (zeros)
+            features2: [B,3,N]
+        '''
+        points_i = points1.cpu().numpy().T[:, 3].reshape(-1, 1)
+        points1_feature = points1[:,3:,:].contiguous()
+        points2_feature = points2[:,3:,:].contiguous()
+        points1 = points1[:,:3,:].contiguous()
+        points2 = points2[:,:3,:].contiguous()
+        
+
+        # Estimate 3D scene flow
+        with torch.no_grad():
+            flow_forward = self.flow(points1, points2, features1, features2)
+            flow_backward = self.flow(points2, points1, features2, features1)
+        
+        # print("flow_forward: {}".format(flow_forward.shape))
+        t = t.unsqueeze(1).unsqueeze(1)
+
+        # Warp input point clouds
+        warped_points1_xyz = points1 + flow_forward * t
+        # _warped_points1_xyz = warped_points1_xyz.cpu().numpy()
+        # print("warped_points1_xyz: {}".format(_warped_points1_xyz.shape))
+        # for xyz in _warped_points1_xyz.T:
+        #     print(xyz)
+        #     break
+        return warped_points1_xyz, points_i
+
+
+
+
 if __name__ == '__main__':
     net = PointINet(freeze=1).cuda()
 
